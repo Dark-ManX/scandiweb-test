@@ -1,0 +1,31 @@
+[
+    {
+        "id": "1",
+        "name": "Apollo Running Short",
+        "price": "50",
+        "amount": "20",
+        "img": "url(../img/sveater1.jpg)"
+     },
+    {
+        "id": "2",
+        "name": "Apollo Running Short",
+        "price": "50",
+        "amount": "10",
+        "img": "url(../img/sveater2.jpg)"
+
+    },
+    {
+        "id": "3",
+        "name": "Apollo Running Short",
+        "price": "50",
+        "amount": "0",
+        "img": "url(../img/jacket.jpg)"
+    },    
+    {
+        "id": "4",
+        "name": "Apollo Running Short",
+        "price": "50",
+        "amount": "5",
+        "img": "url(../img/shorts.jpg)"
+    }
+]
