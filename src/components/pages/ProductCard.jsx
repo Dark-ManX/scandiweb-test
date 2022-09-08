@@ -38,7 +38,8 @@ const ProductCard = () => {
     }
 
     const [item] = getClickedProd(productId);
-    const { name, price, img } = item;
+    console.log(item)
+    const { name, price, img, quantity } = item;
 
     const onSelect = (e) => {
 
@@ -80,7 +81,7 @@ const ProductCard = () => {
 
         e.preventDefault();
 
-        dispatch(addItem({ id: shortid.generate(), productId, name, img, size, color, price }))
+        dispatch(addItem({ id: shortid.generate(), productId, name, img, size, color, price, count: 0 }))
     }
 
     // const [obj] = getClickedProd(productId);
@@ -125,7 +126,7 @@ const ProductCard = () => {
                         <Subtitle>Price: { price }$</Subtitle>
                         {/* <p>{price}</p> */}
 
-                        <Button variant="contained" color="success" type="submit">Add to cart</Button>
+                        <Button variant="contained" color="success" type="submit" disabled={quantity === 0}>Add to cart</Button>
                     </CardThumb>
                 </Form>
             </FlexThumb>

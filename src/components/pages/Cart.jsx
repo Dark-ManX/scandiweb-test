@@ -10,51 +10,72 @@ import { Title, List } from './styledPages/Cart.styled';
 
 const Cart = () => {
 
-    const {items} = useSelector(state => state.cart)
+    const { items } = useSelector(state => state.cart);
+    const quantity = items.map(el => el.count);
+    console.log(quantity)
 
-    const [count, setCount] = useState(0);
-    const [total, setTotal] = useState(0);
+    const [arrOfCounts, setArrOfCounts] = useState(quantity);
+    const [totalPrice, setTotalPrice] = useState(0);
 
-    const onDecrement = (e) => {
-        console.dir(e.target);
-        if (count === 0) {
-            return;
-        }
-        setCount(count - 1);
-    }         
-    
-    const getTotalPrice = (items) => {
-        return items.reduce((acc, el) => { return acc += el.price }, 0)
+    const getTotalPrice = () => {
+        return items.reduce((acc, {price, count}) => { return acc += (price * count) }, 0);
+    };
+
+    const getTotalCount = () => {
+        return quantity.reduce((acc, el) => { return acc += el }, 0);
     }
 
     useEffect(() => {
-        setTotal(getTotalPrice(items));
+        setTotalPrice(getTotalPrice());
+        setArrOfCounts(quantity);
 
-    }, [items])
-console.log(total)
-    return (
-        <Container>
-            <Title>Cart</Title>
+    }, [items]);
+    
+        return (
+            <Container>
+                <Title>Cart</Title>
 
-            <List>
-            {items && (items.map(({name, img, size, color, price}) => (
-                <FlexThumb key={shortid.generate()}>                    
+                <List>
+                    {items && (items.map(el => {
+                        const index = items.indexOf(el);
+
+                        const onIncrement = () => {
+                            console.log(el.count);
+                            setArrOfCounts(quantity);
+                            return (el.count = el.count + 1);
+                        }
+
+                        const onDecrement = () => {
+                            if (el.count === 0) {
+                                return;
+                            }
+                            el.count -= 1;
+                            console.log(items)
+                            setArrOfCounts(quantity)
+                            console.log(arrOfCounts[index])
+                        }
+
+                        return (
+                        <FlexThumb key={shortid.generate()}>
                     
-                    <Item name={name} size={size} color={color} price={price} />
-                    <ButtonsThumb>
-                        <button type="button" onClick={() => setCount(count + 1)}>+</button>
-                        <p>{count}</p>
-                        <button type="button" onClick={onDecrement}>-</button>
-                     </ButtonsThumb>
-                    <Image src={img ? img : defaultImg} alt={name} />
-                </FlexThumb>))
-            )}
-            </List>
+                            <Item name={el.name} size={el.size} color={el.color} price={el.price} />
+                            <ButtonsThumb>
+                                <button type="button" onClick={onIncrement}>+</button>
+                                <p>{arrOfCounts[index]}</p>
+                                <button type="button" onClick={onDecrement}>-</button>
+                            </ButtonsThumb>
+                            <Image src={el.img ? el.img : defaultImg} alt={el.name} />
+                            </FlexThumb>
+                        )
+                    }
+                    ))}
+                </List>
 
-            <CartStats count={count} totalPrice={total} />
+                <CartStats count={getTotalCount()} totalPrice={getTotalPrice()} />
 
-        </Container>
-    )
-}
+            </Container>
+        )
+    }
+
 
 export default Cart;

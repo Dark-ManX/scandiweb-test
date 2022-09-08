@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 
-const CartStats = ({totalPrice, count}) => {
+const CartStats = ({availability, totalPrice, count}) => {
 
     return (
         <div>
@@ -13,7 +13,7 @@ const CartStats = ({totalPrice, count}) => {
                 <p>Total</p>
                 <p>{ (totalPrice * count) }</p>
             </div>
-            <Button variant="contained" color="success" type="submit">Order</Button>
+            <Button variant="contained" color="success" type="submit" disabled={availability > 0}>Order</Button>
 
         </div>
     )
